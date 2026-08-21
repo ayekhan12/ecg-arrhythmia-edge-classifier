@@ -16,9 +16,9 @@ A lightweight hybrid 1D-CNN + Transformer model that classifies 3-second single-
 | `training_pipeline_v2.ipynb` | Full training + evaluation notebook: trains the standard and QAT models, calibrates the decision threshold on validation data, evaluates on the held-out test set, converts the QAT model to INT8 TFLite, and exports it. |
 | `model.tflite` | Final INT8-quantized model, ready to run with TFLite Micro. |
 | `model_data.h` | The same model exported as a C byte array, ready to compile directly into Arduino firmware. |
-|'ArduinoBoardCode.ino' |This is the code for model to run on the Arduino board. It needs to be placed in the same folder as the 'model_data.h' file and uploaded to a board using ArduinoIDE.|
-|'HardwareinLoopCode.ipynb' | This is the Python code used to communicate with the Arduino board. The COM port will likely need changed based on system|
-|'Arduino_TensorFlowLite.zip' | This is the necessary Arduino libraries for ArduinoBoardCode. Drag this file into an existing Arduino library file. Contains backpatched Batch_MatMul changes|
+|`ArduinoBoardCode.ino` |This is the code for model to run on the Arduino board. It needs to be placed in the same folder as the 'model_data.h' file and uploaded to a board using ArduinoIDE.|
+|`HardwareinLoopCode.ipynb` | This is the Python code used to communicate with the Arduino board. The COM port will likely need changed based on system|
+|`Arduino_TensorFlowLite.zip` | This is the necessary Arduino libraries for ArduinoBoardCode. Drag this file into an existing Arduino library file. Contains backpatched Batch_MatMul changes|
 
 **Not included** (see `.gitignore`): raw MIT-BIH data (`data/`), processed `.npy` arrays (`processed/`), and superseded drafts (`data 3.py`, `model Binary3.ipynb`, `model_v2.ipynb`, `Training-Pipeline-Binary.ipynb`) — `model_builder.py` and `training_pipeline_v2.ipynb` are the current, most-recent versions of those.
 
@@ -58,7 +58,7 @@ cd ecg-arrhythmia-edge-classifier
 
 ### 2. Install dependencies
 ```bash
-pip install tensorflow tf-keras tensorflow-model-optimization scikit-learn numpy matplotlib seaborn wfdb
+pip install tensorflow tf-keras tensorflow-model-optimization scikit-learn numpy matplotlib seaborn wfdb pyserial
 ```
 
 ### 3. Get the raw MIT-BIH data
@@ -72,6 +72,14 @@ This creates a local `processed/` folder containing `X_train.npy`, `X_test.npy`,
 
 ### 5. Run the training pipeline
 Open `training_pipeline_v2.ipynb` in Jupyter and run all cells. It imports `model_builder.py` directly, trains the standard and QAT models, evaluates on the test set, and re-exports `model.tflite` / `model_data.h`.
+
+### 6. Check Inference
+
+### 7. Flash the board
+Copy `model_data.h` and place in same location as `ArduinoBoardCode.ino`. Uncompress `Arduino_TensorFlowLite.zip` into your Arduino library file. Flash Arduino code and model to board using ArduinoIDE.
+
+### 8. Test On-board Deployment
+Run `HardwareinLoopCode.ipynb`. Update serialport variable to match COM PORT as needed. 
 
 ---
 
