@@ -16,6 +16,9 @@ A lightweight hybrid 1D-CNN + Transformer model that classifies 3-second single-
 | `training_pipeline_v2.ipynb` | Full training + evaluation notebook: trains the standard and QAT models, calibrates the decision threshold on validation data, evaluates on the held-out test set, converts the QAT model to INT8 TFLite, and exports it. |
 | `model.tflite` | Final INT8-quantized model, ready to run with TFLite Micro. |
 | `model_data.h` | The same model exported as a C byte array, ready to compile directly into Arduino firmware. |
+|'ArduinoBoardCode.ino' |This is the code for model to run on the Arduino board. It needs to be placed in the same folder as the 'model_data.h' file and uploaded to a board using ArduinoIDE.|
+|'HardwareinLoopCode.ipynb' | This is the Python code used to communicate with the Arduino board. The COM port will likely need changed based on system|
+|'Arduino_TensorFlowLite.zip' | This is the necessary Arduino libraries for ArduinoBoardCode. Drag this file into an existing Arduino library file. Contains backpatched Batch_MatMul changes|
 
 **Not included** (see `.gitignore`): raw MIT-BIH data (`data/`), processed `.npy` arrays (`processed/`), and superseded drafts (`data 3.py`, `model Binary3.ipynb`, `model_v2.ipynb`, `Training-Pipeline-Binary.ipynb`) — `model_builder.py` and `training_pipeline_v2.ipynb` are the current, most-recent versions of those.
 
